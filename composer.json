@@ -1,0 +1,55 @@
+{
+  "name": "barraroot/filament-material-theme",
+  "description": "Filament Material Design Theme.",
+  "keywords": [
+    "barraroot",
+    "laravel",
+    "filament",
+    "filament-plugin"
+  ],
+  "homepage": "https://github.com/barraroot/filament-material-theme",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lucas Carvalho",
+      "email": "barraroot@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "filament/filament": "^3.0",
+    "spatie/laravel-package-tools": "^1.14.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^3.0",
+    "laravel/pint": "^1.21",
+    "orchestra/testbench": "^9.0|^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Barraroot\\FilamentMaterialTheme\\": "src"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+    "analyse": "vendor/bin/phpstan analyse",
+    "format": "vendor/bin/pint"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Barraroot\\FilamentMaterialTheme\\FilamentMaterialThemeServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

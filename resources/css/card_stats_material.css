@@ -1,0 +1,317 @@
+/**
+ * Material Design Card Stats para UI
+ * Baseado no Material UI (https://mui.com/material-ui/react-card/)
+ */
+
+/* ===== Variáveis CSS ===== */
+:root {
+  /* Cores primárias do Material Design */
+  --md-primary-main: #3f51b5; /* Indigo 500 */
+  --md-primary-light: #757ce8; /* Indigo 300 */
+  --md-primary-dark: #002984; /* Indigo 700 */
+  --md-primary-contrast: #ffffff;
+  
+  /* Cores de estado (mantendo as cores originais) */
+  --md-success: #4caf50;
+  --md-error: #f44336;
+  --md-info: #2196f3;
+  
+  /* Cores neutras */
+  --md-grey-50: #fafafa;
+  --md-grey-100: #f5f5f5;
+  --md-grey-200: #eeeeee;
+  --md-grey-300: #e0e0e0;
+  --md-grey-400: #bdbdbd;
+  --md-grey-500: #9e9e9e;
+  --md-grey-600: #757575;
+  --md-grey-700: #616161;
+  --md-grey-800: #424242;
+  --md-grey-900: #212121;
+  
+  /* Elevação e sombras */
+  --md-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --md-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --md-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --md-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  
+  /* Tipografia */
+  --md-font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+  /* Transições */
+  --md-transition-duration: 0.2s;
+  --md-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Bordas */
+  --md-border-radius: 12px;
+}
+
+/* ===== Cards de Estatísticas ===== */
+
+/* Container principal do grid de cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+}
+
+/* Card individual */
+.stats-card {
+  background-color: white;
+  border-radius: var(--md-border-radius);
+  box-shadow: var(--md-shadow-2);
+  padding: 24px;
+  transition: box-shadow var(--md-transition-duration) var(--md-transition-timing),
+              transform var(--md-transition-duration) var(--md-transition-timing);
+  overflow: hidden;
+  position: relative;
+  font-family: var(--md-font-family);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Efeito hover no card */
+.stats-card:hover {
+  box-shadow: var(--md-shadow-3);
+  transform: translateY(-2px);
+}
+
+/* Título do card */
+.stats-card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--md-grey-700);
+  margin: 0 0 8px 0;
+}
+
+/* Valor principal */
+.stats-card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--md-grey-900);
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+/* Subtítulo/descrição */
+.stats-card-subtitle {
+  font-size: 0.875rem;
+  color: var(--md-grey-600);
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* Indicadores de aumento/diminuição */
+.stats-card-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+/* Ícone de aumento */
+.stats-card-indicator-up {
+  color: var(--md-success);
+}
+
+/* Ícone de diminuição */
+.stats-card-indicator-down {
+  color: var(--md-error);
+}
+
+/* Ícone de indicador */
+.stats-card-indicator-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+}
+
+/* Card com gráfico */
+.stats-card-with-chart {
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-card-chart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  opacity: 0.5;
+}
+
+/* Variantes de cores para os cards */
+.stats-card-primary {
+  border-top: 4px solid var(--md-primary-main);
+}
+
+.stats-card-success {
+  border-top: 4px solid var(--md-success);
+}
+
+.stats-card-error {
+  border-top: 4px solid var(--md-error);
+}
+
+.stats-card-info {
+  border-top: 4px solid var(--md-info);
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .stats-card {
+    padding: 16px;
+  }
+  
+  .stats-card-value {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+  }
+}
+
+/* ===== Aplicação específica para os cards do screenshot ===== */
+
+/* Aplicando o estilo Material UI aos cards existentes */
+/* Assumindo que os cards têm uma classe base como .card ou div direto */
+
+/* Cards de estatísticas */
+.card, 
+[class*="card-stats"],
+[class*="card-dashboard"] {
+  background-color: white;
+  border-radius: var(--md-border-radius);
+  box-shadow: var(--md-shadow-2);
+  padding: 24px;
+  transition: box-shadow var(--md-transition-duration) var(--md-transition-timing),
+              transform var(--md-transition-duration) var(--md-transition-timing);
+  overflow: hidden;
+  position: relative;
+  font-family: var(--md-font-family);
+  border: none;
+  height: 100%;
+}
+
+/* Efeito hover */
+.card:hover,
+[class*="card-stats"]:hover,
+[class*="card-dashboard"]:hover {
+  box-shadow: var(--md-shadow-3);
+  transform: translateY(-2px);
+}
+
+/* Título do card (Depósitos, Saques, etc.) */
+.card h3,
+.card [class*="title"],
+.card [class*="header"],
+[class*="card-title"],
+[class*="card-header"] {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--md-grey-700);
+  margin: 0 0 8px 0;
+}
+
+/* Valor principal (R$ 2.672,00, etc.) */
+.card h2,
+.card [class*="value"],
+.card [class*="amount"],
+[class*="card-value"],
+[class*="card-amount"] {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--md-grey-900);
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+/* Subtítulo/descrição (Total de Depósitos, etc.) */
+.card p,
+.card [class*="subtitle"],
+.card [class*="description"],
+[class*="card-subtitle"],
+[class*="card-description"] {
+  font-size: 0.875rem;
+  color: var(--md-grey-600);
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+}
+
+/* Indicadores de aumento (seta para cima) */
+[class*="indicator-up"],
+[class*="indicator-positive"],
+[class*="trend-up"],
+[class*="trend-positive"] {
+  color: var(--md-success);
+}
+
+/* Indicadores de diminuição (seta para baixo) */
+[class*="indicator-down"],
+[class*="indicator-negative"],
+[class*="trend-down"],
+[class*="trend-negative"] {
+  color: var(--md-error);
+}
+
+/* Aplicação específica para os cards do screenshot */
+/* Estas classes são mais específicas e devem sobrescrever as anteriores se necessário */
+
+/* Depósitos */
+[id*="depositos"],
+[class*="depositos"],
+[data-type="depositos"] {
+  border-top: 4px solid var(--md-success);
+}
+
+/* Saques */
+[id*="saques"],
+[class*="saques"],
+[data-type="saques"] {
+  border-top: 4px solid var(--md-error);
+}
+
+/* Ticket Médio */
+[id*="ticket"],
+[class*="ticket"],
+[data-type="ticket"] {
+  border-top: 4px solid var(--md-primary-main);
+}
+
+/* Total Usuários */
+[id*="usuarios"],
+[class*="usuarios"],
+[data-type="usuarios"] {
+  border-top: 4px solid var(--md-info);
+}
+
+/* Total Saldos */
+[id*="saldos"],
+[class*="saldos"],
+[data-type="saldos"] {
+  border-top: 4px solid var(--md-primary-dark);
+}
+
+/* Total Bonus */
+[id*="bonus"],
+[class*="bonus"],
+[data-type="bonus"] {
+  border-top: 4px solid var(--md-primary-light);
+}
+
+/* Gráfico (para o card de usuários) */
+[class*="chart"],
+[class*="graph"],
+[id*="chart"],
+[id*="graph"] {
+  margin-top: 8px;
+  opacity: 0.7;
+}
