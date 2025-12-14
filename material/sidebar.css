@@ -1,0 +1,282 @@
+/**
+ * Material Design Sidebar para Filament PHP 3
+ * Baseado no Material UI (https://mui.com/material-ui/react-drawer/)
+ */
+
+/* ===== Variáveis CSS ===== */
+:root {
+  /* Cores primárias do Material Design (mesmas do theme.css) */
+  --md-primary-main: #3f51b5; /* Indigo 500 */
+  --md-primary-light: #757ce8; /* Indigo 300 */
+  --md-primary-dark: #002984; /* Indigo 700 */
+  --md-primary-contrast: #ffffff;
+
+  /* Cores neutras */
+  --md-grey-50: #fafafa;
+  --md-grey-100: #f5f5f5;
+  --md-grey-200: #eeeeee;
+  --md-grey-300: #e0e0e0;
+  --md-grey-400: #bdbdbd;
+  --md-grey-500: #9e9e9e;
+  --md-grey-600: #757575;
+  --md-grey-700: #616161;
+  --md-grey-800: #424242;
+  --md-grey-900: #212121;
+
+  /* Elevação e sombras */
+  --md-shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --md-shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --md-shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --md-shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+  /* Tipografia */
+  --md-font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  /* Transições */
+  --md-transition-duration: 0.2s;
+  --md-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Sidebar */
+  --md-sidebar-width: 240px;
+  --md-sidebar-collapsed-width: 64px;
+}
+
+/* ===== Sidebar (Menu Lateral) ===== */
+
+/* Container principal do Sidebar */
+.fi-sidebar {
+  position: fixed;
+  top: 4.5rem;
+  left: 0;
+  bottom: 0;
+  width: var(--md-sidebar-width);
+  background-color: white;
+  box-shadow: var(--md-shadow-2);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: transform var(--md-transition-duration) var(--md-transition-timing),
+              width var(--md-transition-duration) var(--md-transition-timing);
+  font-family: var(--md-font-family);
+}
+
+/* Sidebar fechado (temporário) */
+.fi-sidebar-closed {
+  transform: translateX(-100%);
+}
+
+/* Overlay do sidebar em dispositivos móveis */
+.fi-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--md-transition-duration) var(--md-transition-timing),
+              visibility var(--md-transition-duration) var(--md-transition-timing);
+}
+
+.fi-sidebar-open .fi-sidebar-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Cabeçalho do Sidebar */
+.fi-sidebar-header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--md-grey-200);
+}
+
+.fi-sidebar-header-logo {
+  height: 32px;
+  max-width: 100%;
+}
+
+.fi-sidebar-header-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Container de navegação */
+.fi-sidebar-nav {
+  flex-grow: 1;
+  padding: 8px 0;
+}
+
+/* Grupos de navegação */
+.fi-sidebar-group {
+  margin-bottom: 8px;
+}
+
+.fi-sidebar-group-label {
+  padding: 16px 16px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--md-grey-600);
+}
+
+/* Itens de navegação */
+.fi-sidebar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  height: 48px;
+  color: var(--md-grey-800);
+  text-decoration: none;
+  transition: background-color var(--md-transition-duration) var(--md-transition-timing);
+  border-radius: 0 24px 24px 0;
+  margin: 0 8px 0 0;
+}
+
+.fi-sidebar-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.fi-sidebar-item-active {
+  background-color: rgba(63, 81, 181, 0.12);
+  color: var(--md-primary-main);
+}
+
+.fi-sidebar-item-active:hover {
+  background-color: rgba(63, 81, 181, 0.16);
+}
+
+/* Ícones dos itens */
+.fi-sidebar-item-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  color: var(--md-grey-600);
+  flex-shrink: 0;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+  color: var(--md-primary-main);
+}
+
+/* Texto dos itens */
+.fi-sidebar-item-label {
+  flex-grow: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Badge dos itens */
+.fi-sidebar-item-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background-color: var(--md-primary-main);
+  color: var(--md-primary-contrast);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+/* Subitens de navegação */
+.fi-sidebar-sub-items {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height var(--md-transition-duration) var(--md-transition-timing);
+}
+
+.fi-sidebar-sub-items-expanded {
+  max-height: 1000px; /* Valor alto para permitir expansão completa */
+}
+
+.fi-sidebar-sub-item {
+  padding-left: 56px;
+  height: 40px;
+}
+
+/* Indicador de expansão */
+.fi-sidebar-item-expand-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform var(--md-transition-duration) var(--md-transition-timing);
+}
+
+.fi-sidebar-item-expanded .fi-sidebar-item-expand-icon {
+  transform: rotate(180deg);
+}
+
+/* Rodapé do Sidebar */
+.fi-sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid var(--md-grey-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efeito Ripple para itens clicáveis */
+@keyframes md-ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.fi-sidebar-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.fi-sidebar-item::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+}
+
+.fi-sidebar-item:active::after {
+  animation: md-ripple 0.4s ease-out;
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 600px) {
+  .fi-sidebar {
+    width: 256px; /* Um pouco mais largo em mobile para facilitar o toque */
+  }
+
+  /* Em mobile, o sidebar sempre fica por cima do conteúdo quando aberto */
+  .fi-sidebar-open .fi-main {
+    margin-left: 0;
+  }
+
+  /* Ajuste para o conteúdo principal */
+  .fi-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
